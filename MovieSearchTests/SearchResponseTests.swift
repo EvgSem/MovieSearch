@@ -34,11 +34,9 @@ class SearchResponseTests: XCTestCase {
             "\"total_pages\": 1}"
         
         let data = jsonResponse.data(using: .ascii)
-        
-        let httpResponse = HTTPURLResponse(url: URL(string: "www.test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
-        
+    
         //act
-        let response = SearchResponse(data: data!, status: httpResponse!)
+        let response = SearchResponse(data: data!)
         
         //assert
         assert(response != nil)

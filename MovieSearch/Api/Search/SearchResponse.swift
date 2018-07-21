@@ -3,20 +3,17 @@ import Foundation
 struct SearchResponse: ResponseProtocol {
     
     let movieResponses: [MovieResponse]
-    let status: HTTPURLResponse
     let page: Int
     let totalResults: Int
     let totalPages: Int
 
-    init?(data: Data, status: HTTPURLResponse) {
+    init?(data: Data) {
         
         let jsonObject = try? JSONSerialization.jsonObject(with: data, options: [])
         
         guard let dictionary = jsonObject as? [String: Any] else {
             return nil
         }
-        
-        self.status = status
         
         var parsedMovies = [MovieResponse]()
         self.page = dictionary["page"] as! Int

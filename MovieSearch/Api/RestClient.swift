@@ -5,41 +5,50 @@ class RestClient {
     var baseURL: URL
     let defaultSession = URLSession(configuration: .default)
     var dataTask: URLSessionDataTask?
-    var errorMessage = ""
+    let apiKey : String
     
-    init(baseURL: URL){
+    init(baseURL: URL, apiKey: String){
         
         self.baseURL = baseURL
+        self.apiKey = apiKey
     }
     
-    func send<T>(request: T, completion: (ResponseProtocol) -> Void) where T:RequestProtocol {
+    func send<TResponse>(request: RequestProtocol, completion: @escaping (RequestResult<TResponse>) -> Void) where TResponse: ResponseProtocol {
         
         dataTask?.cancel()
         
-        if  var urlComponents = URLComponents(string: baseURL.absoluteString + request.resource) {
+        guard var urlComponents = URLComponents(url: self.baseURL, resolvingAgainstBaseURL: false) else {
             
-            urlComponents.query = "api_key=d71fc1ca82e7db37f384ae1d790f07d7&language=en-US&query=Lion%20King&page=1&include_adult=false"
-            
-            guard let url = urlComponents.url else { return }
-            
-            dataTask = defaultSession.dataTask(with: url) { data, response, error in
-                defer { self.dataTask = nil }
-                
-                
-                if let error = error {
-                    
-                    self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
-                } else {
-                    
-                    if let data = data,
-                        let response = response as? HTTPURLResponse,
-                        response.statusCode == 200 {
-                        
-                        print(data)
-                        
-                    }
-                }
-            }
+            completion(RequestResult(response: nil, error: nil, value: nil))
+            return
         }
+
+        urlComponents.path += request.resource
+        
+        var parametersQueryString = request.getParameters()
+                                           .map({ "\($0)=\($1)" })
+                                           .joined(separator: "&")
+        
+        
+        urlComponents.query = "api_key=" + apiKey + "&" + parametersQueryString
+        
+        guard let url = urlComponents.url else { return }
+        
+        dataTask = defaultSession.dataTask(with: url) { data, response, error in
+            defer { self.dataTask = nil }
+            
+            let value: TResponse?
+            if let data = data {
+                value = TResponse.self.init(data: data)
+            } else {
+                value = nil
+            }
+            
+            let result = RequestResult(response: response as? HTTPURLResponse,
+                                       error: error,
+                                       value: value)
+            completion(result)
+        }
+        dataTask?.resume()
     }
 }
