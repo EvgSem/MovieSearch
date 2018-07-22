@@ -4,7 +4,7 @@ class MovieSearchResultViewController: UITableViewController {
 
     private let cellIdentifier = "SearchResultCell"
     private let viewModel: MovieSearchResultViewModel
-    
+    var activityIndicatorView: UIActivityIndicatorView!
     
     //MARK: Init
     
@@ -23,17 +23,27 @@ class MovieSearchResultViewController: UITableViewController {
         
         self.tableView.register(MovieSearchResultTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         
+        tableView.tableFooterView = UIView()
+        
+        activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        tableView.backgroundView = activityIndicatorView
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         self.getMoviesData()
     }
     
     private func getMoviesData() {
         
+        activityIndicatorView.startAnimating()
         self.viewModel.queryNextMoviesBatch { isSuccessful in
             
             if isSuccessful {
                 
                 self.tableView.reloadData()
             }
+            self.activityIndicatorView.stopAnimating()
+            self.activityIndicatorView.hidesWhenStopped = true
         }
     }
 
@@ -42,6 +52,7 @@ class MovieSearchResultViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
