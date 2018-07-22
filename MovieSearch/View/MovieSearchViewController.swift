@@ -1,6 +1,6 @@
 import UIKit
 
-class MovieSearchViewController: UIViewController {
+class MovieSearchViewController: UIViewController, UITextFieldDelegate {
     
     private let viewModel: MovieSearchViewModel
     
@@ -77,6 +77,12 @@ class MovieSearchViewController: UIViewController {
         self.view.addSubview(searchButton)
         
         self.setupLayout()
+        
+
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MovieSearchViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+         self.movieTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -149,7 +155,7 @@ class MovieSearchViewController: UIViewController {
                         .isActive = true
         
         movieDBImageView.widthAnchor
-                        .constraint(equalTo: self.view.widthAnchor, multiplier: 0.4)
+                        .constraint(equalTo: self.view.heightAnchor, multiplier: 0.2)
                         .isActive = true
         
         movieDBImageView.heightAnchor.constraint(equalTo: movieDBImageView.widthAnchor, multiplier: 1)
@@ -158,15 +164,28 @@ class MovieSearchViewController: UIViewController {
     
     //MARK: Control Events Handlers
     
-    @objc private func searchMovie(sender: UIButton!) {
-        
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        self.search()
+        return false
+    }
+    
+    private func search() {
         guard let query = movieTextField.text, !query.isEmpty else {
-            return
+        return
         }
-        
+    
         let movieSearchResultViewModel = viewModel.createMovieSearchResultViewModel(query: query)
         let controller = MovieSearchResultViewController(viewModel: movieSearchResultViewModel)
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    @objc private func searchMovie(sender: UIButton!) {
+        self.search()
     }
 
 }
