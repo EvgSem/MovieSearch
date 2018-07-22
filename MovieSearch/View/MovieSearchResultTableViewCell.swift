@@ -32,6 +32,7 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         label.text = "Lion King"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -43,12 +44,13 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         label.lineBreakMode = .byTruncatingTail
         label.font = UIFont.systemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentHuggingPriority(UILayoutPriority(rawValue: 45), for: .vertical)
         return label
     }()
     
     private let posterImageView: UIImageView = {
         
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "theMovieDB"))
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -128,5 +130,6 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         
         self.titleLabel.text = movie.title
         self.descriptionLabel.text = movie.overview
+        self.posterImageView.image = movie.image ?? #imageLiteral(resourceName: "theMovieDB")
     }
 }
