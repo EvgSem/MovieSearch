@@ -23,6 +23,8 @@
 		C7C4E7062102A31500C4908D /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4E7052102A31500C4908D /* SearchRequest.swift */; };
 		C7C4E7082102C32000C4908D /* RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4E7072102C32000C4908D /* RequestResult.swift */; };
 		C7C4E70B2102E00700C4908D /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4E70A2102E00700C4908D /* MovieService.swift */; };
+		C7C4E70D2103EE9800C4908D /* MovieSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4E70C2103EE9800C4908D /* MovieSearchResultViewController.swift */; };
+		C7C4E70F2103EFA500C4908D /* MovieSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C4E70E2103EFA500C4908D /* MovieSearchResultTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		C7C4E7052102A31500C4908D /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 		C7C4E7072102C32000C4908D /* RequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestResult.swift; sourceTree = "<group>"; };
 		C7C4E70A2102E00700C4908D /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
+		C7C4E70C2103EE9800C4908D /* MovieSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchResultViewController.swift; sourceTree = "<group>"; };
+		C7C4E70E2103EFA500C4908D /* MovieSearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			children = (
 				C7C4E6D1210250C100C4908D /* AppDelegate.swift */,
 				C7C4E6D3210250C100C4908D /* MovieSearchViewController.swift */,
+				C7C4E70C2103EE9800C4908D /* MovieSearchResultViewController.swift */,
+				C7C4E70E2103EFA500C4908D /* MovieSearchResultTableViewCell.swift */,
 				C7C4E7092102DFF800C4908D /* Service */,
 				C7C4E6F121025C2600C4908D /* Api */,
 				C7C4E6D5210250C100C4908D /* Main.storyboard */,
@@ -251,6 +257,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7C4E70F2103EFA500C4908D /* MovieSearchResultTableViewCell.swift in Sources */,
+				C7C4E70D2103EE9800C4908D /* MovieSearchResultViewController.swift in Sources */,
 				C7C4E7082102C32000C4908D /* RequestResult.swift in Sources */,
 				C7C4E6D4210250C100C4908D /* MovieSearchViewController.swift in Sources */,
 				C7C4E701210284BE00C4908D /* MovieResponse.swift in Sources */,
