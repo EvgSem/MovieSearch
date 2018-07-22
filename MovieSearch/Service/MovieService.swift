@@ -16,19 +16,19 @@ class MovieService {
         self.picturesRestClient =  RestClient(baseURL: picturesURL, apiKey: apiKey)
     }
     
-    func search(query: String, page: Int, completion: @escaping ([Movie]?) -> Void) {
+    func search(query: String, page: Int, completion: @escaping ([Movie]?, Int) -> Void) {
         
         let request = SearchRequest(query: query, page: page)
         
         moviesRestClient.send(request: request) { (result: RequestResult<SearchResponse>) in
             
             guard result.error == nil && result.response?.statusCode == 200 else {
-                self.safeCompletion { completion(nil) }
+                self.safeCompletion { completion(nil, 0) }
                 return
             }
             
             guard let resultMovieData = result.value else {
-                self.safeCompletion { completion([]) }
+                self.safeCompletion { completion([], 0) }
                 return
             }
             
@@ -46,7 +46,7 @@ class MovieService {
                 }
             }
             downloadGroup.notify(queue: DispatchQueue.main) {
-                completion(movies)
+                completion(movies, resultMovieData.totalPages)
             }
         }
     }

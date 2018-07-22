@@ -69,6 +69,12 @@ class MovieSearchResultViewController: UITableViewController {
         let movie = self.viewModel.movies[indexPath.row]
         resultCell.configure(movie: movie)
         
+        if indexPath.row == self.viewModel.movies.count - 1 {
+            if viewModel.moreMoviesAvavilable() {
+                getMoviesData()
+            }
+        }
+        
         return cell
     }
 }
