@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        let viewController = MovieSearchViewController()
+        let viewController = MovieSearchViewController(viewModel: MovieSearchViewModel())
         let navigationController = UINavigationController(rootViewController: viewController)
         
         self.window?.rootViewController = navigationController

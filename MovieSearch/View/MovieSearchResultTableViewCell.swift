@@ -10,7 +10,6 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         stackView.alignment = .center
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.backgroundColor = UIColor.green
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 10
         return stackView
@@ -21,7 +20,6 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.backgroundColor = UIColor.purple
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 5
         stackView.setContentHuggingPriority(UILayoutPriority(rawValue: 250.0), for: .horizontal)
@@ -51,7 +49,6 @@ class MovieSearchResultTableViewCell: UITableViewCell {
     private let posterImageView: UIImageView = {
         
         let imageView = UIImageView(image: #imageLiteral(resourceName: "theMovieDB"))
-        imageView.backgroundColor = UIColor.red
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -116,14 +113,6 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         self.innerStackView.topAnchor
             .constraint(equalTo: self.outerStackView.topAnchor, constant: 20)
             .isActive = true
-//
-//        self.innerStackView.bottomAnchor
-//            .constraint(equalTo: self.outerStackView.bottomAnchor)
-//            .isActive = true
-//
-//        self.innerStackView.leftAnchor
-//            .constraint(equalTo: self.posterImageView.rightAnchor)
-//            .isActive = true
     }
     
     func setLayoutposterImageView() {
@@ -131,5 +120,13 @@ class MovieSearchResultTableViewCell: UITableViewCell {
         self.posterImageView.widthAnchor
             .constraint(equalToConstant: 100)
             .isActive = true
+    }
+    
+    //MARK: Configuration
+    
+    func configure(movie: Movie) {
+        
+        self.titleLabel.text = movie.title
+        self.descriptionLabel.text = movie.overview
     }
 }

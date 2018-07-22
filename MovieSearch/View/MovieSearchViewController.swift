@@ -2,6 +2,8 @@ import UIKit
 
 class MovieSearchViewController: UIViewController {
     
+    private let viewModel: MovieSearchViewModel
+    
     //MARK: Subviews
     
     private let movieDBImageView: UIImageView = {
@@ -51,6 +53,17 @@ class MovieSearchViewController: UIViewController {
         button.addTarget(self, action: #selector(searchMovie), for: .touchUpInside)
         return button
     }()
+    
+    //MARK: Init
+    
+    init(viewModel: MovieSearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: Lifecycle
     
@@ -147,7 +160,12 @@ class MovieSearchViewController: UIViewController {
     
     @objc private func searchMovie(sender: UIButton!) {
         
-        let controller = MovieSearchResultViewController()
+        guard let query = movieTextField.text, !query.isEmpty else {
+            return
+        }
+        
+        let movieSearchResultViewModel = viewModel.createMovieSearchResultViewModel(query: query)
+        let controller = MovieSearchResultViewController(viewModel: movieSearchResultViewModel)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
