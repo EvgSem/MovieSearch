@@ -16,9 +16,16 @@ struct SearchResponse: ResponseProtocol {
         }
         
         var parsedMovies = [MovieResponse]()
-        self.page = dictionary["page"] as! Int
-        self.totalPages = dictionary["total_results"] as! Int
-        self.totalResults = dictionary["total_pages"] as! Int
+        guard let page = dictionary["page"] as? Int,
+            let totalPages = dictionary["total_results"] as? Int,
+            let totalResults = dictionary["total_pages"] as? Int else {
+          return nil
+        }
+        
+        self.page = page
+        self.totalPages = totalPages
+        self.totalResults = totalResults
+        
         
         guard let movies = dictionary["results"] as? [Any] else {
             return nil

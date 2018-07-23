@@ -6,6 +6,7 @@ final class MovieSearchResultViewModel {
     private let movieService: MovieService
     private var currentPage = 1
     private var totalPages: Int
+    private var isRequestRunning: Bool = false
     
     var movies: [Movie] = []
     
@@ -18,8 +19,15 @@ final class MovieSearchResultViewModel {
     
     func queryNextMoviesBatch(completion: @escaping (Bool) -> Void) {
         
+        guard !self.isRequestRunning else {
+            completion(false)
+            return
+        }
+        
+        self.isRequestRunning = true
+        
         self.movieService.search(query: self.query, page: self.currentPage) { movies, totalPages in
-            
+            self.isRequestRunning = false
             guard let movies = movies else {
                 
                 completion(false)
