@@ -32,3 +32,4 @@ Also there is MovieService class which abstracts API client from ViewModels.
 3. Add spinner while loading next page of movies
 4. Improve UI design
 5. Show more information about movies. 
+6. Handle situation when User has no access to Server and when there is no Internet connection.
